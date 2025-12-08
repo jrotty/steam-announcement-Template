@@ -160,6 +160,32 @@ function increaseViews($cid) {
 }
 
 /**
+ * 解析侧边栏菜单配置
+ * 
+ * @param string $menuConfig 菜单配置字符串
+ * @return array 解析后的菜单数组
+ */
+function parseSidebarMenu($menuConfig) {
+    $menu = array();
+    $lines = explode("\n", $menuConfig);
+    
+    foreach ($lines as $line) {
+        $line = trim($line);
+        if (empty($line)) continue;
+        
+        $parts = explode('|', $line, 2);
+        if (count($parts) == 2) {
+            $menu[] = array(
+                'name' => trim($parts[0]),
+                'url' => trim($parts[1])
+            );
+        }
+    }
+    
+    return $menu;
+}
+
+/**
  * 获取文章自定义字段
  * 
  * @param string $name 字段名称

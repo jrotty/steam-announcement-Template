@@ -5,27 +5,6 @@
  * @package SteamAnnouncement
  */
 
-// 导入侧边导航菜单解析函数
-function parseSidebarMenu($menuConfig) {
-    $menu = array();
-    $lines = explode("\n", $menuConfig);
-    
-    foreach ($lines as $line) {
-        $line = trim($line);
-        if (empty($line)) continue;
-        
-        $parts = explode('|', $line, 2);
-        if (count($parts) == 2) {
-            $menu[] = array(
-                'name' => trim($parts[0]),
-                'url' => trim($parts[1])
-            );
-        }
-    }
-    
-    return $menu;
-}
-
 $this->need('header.php');
 ?>
 
@@ -38,6 +17,7 @@ $this->need('header.php');
             $menuConfig = $this->options->sidebarMenu;
             $menuItems = parseSidebarMenu($menuConfig);
             
+            // 输出配置的菜单项
             foreach ($menuItems as $item) {
                 $isActive = false;
                 $isGroupTitle = ($item['url'] == '#');
@@ -51,20 +31,32 @@ $this->need('header.php');
                 
                 if ($isGroupTitle) {
                     // 分组标题
-                    echo '<li class="nav-item"><span class="nav-group-title">' . $item['name'] . '</span></li>';
+                    echo '<li class="nav-item"><span class="nav-group-title">' . htmlspecialchars($item['name']) . '</span></li>';
                 } else {
                     // 普通菜单项
-                    echo '<li class="nav-item"><a href="' . $item['url'] . '" class="nav-link' . ($isActive ? ' active' : '') . '">' . $item['name'] . '</a></li>';
+                    echo '<li class="nav-item"><a href="' . htmlspecialchars($item['url']) . '" class="nav-link' . ($isActive ? ' active' : '') . '">' . htmlspecialchars($item['name']) . '</a></li>';
                 }
             }
             
-            // 显示Typecho页面
+            // 输出Typecho页面列表 - 修复显示URL而非标题的bug
             $this->widget('Widget_Contents_Page_List')->to($pages);
             if ($pages->have()) {
                 echo '<li class="nav-item"><span class="nav-group-title">页面</span></li>';
                 while($pages->next()):
+                    // 检查当前页面是否为活跃状态
                     $isActive = ($this->is('page') && $this->cid == $pages->cid);
-                    echo '<li class="nav-item"><a href="' . $pages->permalink() . '" class="nav-link' . ($isActive ? ' active' : '') . '">' . $pages->title() . '</a></li>';
+                    // 获取页面标题和链接
+                    $pageTitle = $pages->title;
+                    $pagePermalink = $pages->permalink;
+                    // 确保标题和链接是字符串类型
+                    if (!is_string($pageTitle)) {
+                        $pageTitle = (string)$pageTitle;
+                    }
+                    if (!is_string($pagePermalink)) {
+                        $pagePermalink = (string)$pagePermalink;
+                    }
+                    // 输出转义后的HTML
+                    echo '<li class="nav-item"><a href="' . htmlspecialchars($pagePermalink) . '" class="nav-link' . ($isActive ? ' active' : '') . '">' . htmlspecialchars($pageTitle) . '</a></li>';
                 endwhile;
             }
             ?>
@@ -76,6 +68,7 @@ $this->need('header.php');
         <main class="main-content">
             <div class="container">
                 <article class="single-post">
+                    <!-- 页面标题和元数据 -->
                     <header class="post-header">
                         <h1 class="post-title"><?php $this->title(); ?></h1>
                         <div class="post-meta">
@@ -90,16 +83,24 @@ $this->need('header.php');
                         </div>
                     </header>
                     
+                    <!-- 页面内容 -->
                     <div class="post-content">
                         <?php $this->content(); ?>
                     </div>
+                    
+                    <!-- 页面底部 -->
+                    <footer class="post-footer">
+                        <!-- 可以添加页面底部信息 -->
+                    </footer>
                 </article>
                 
                 <!-- 评论区 -->
+                <?php if (!isset($this->options->commentsDisabled) || !$this->options->commentsDisabled): ?>
                 <div class="comments-section">
                     <?php $this->comments(); ?>
                     <?php $this->commentForm(); ?>
                 </div>
+                <?php endif; ?>
             </div>
         </main>
         
