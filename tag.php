@@ -75,52 +75,77 @@ $this->need('header.php');
     <div class="content-container">
         <main class="main-content">
             <div class="container">
-                <div class="archive-header">
-                    <h1 class="archive-title">
+                <!-- 搜索/归档页头部 - Steam风格 -->
+                <div class="search-header">
+                    <h1 class="search-title">
                         标签：<?php $this->archiveTitle(array('tag' => '%s'), '', ''); ?>
                     </h1>
-                    <p class="archive-description">
-                        共包含 <?php $this->archiveCount(); ?> 篇文章
-                    </p>
+                    <div class="search-info">
+                        <p class="search-results-count">
+                            共包含 <strong><?php $this->archiveCount(); ?></strong> 篇相关文章
+                        </p>
+                    </div>
                 </div>
                 
-                <div class="announcement-list">
+                <!-- 搜索结果列表 - Steam风格 -->
+                <div class="search-results">
                     <?php if ($this->have()): ?>
                         <?php while($this->next()): ?>
-                        <article class="announcement-card">
-                            <div class="announcement-header">
-                                <h2 class="announcement-title">
+                        <article class="search-result-card">
+                            <div class="search-result-content">
+                                <!-- 搜索结果标题 -->
+                                <h2 class="search-result-title">
                                     <a href="<?php $this->permalink() ?>" title="<?php $this->title() ?>"><?php $this->title() ?></a>
                                 </h2>
-                                <div class="announcement-meta">
-                                    <span class="announcement-date"><?php $this->date('Y-m-d H:i'); ?></span>
-                                    <span class="announcement-author"><?php $this->author(); ?></span>
-                                    <span class="announcement-category">
+                                
+                                <!-- 搜索结果摘要 -->
+                                <div class="search-result-excerpt">
+                                    <?php $this->excerpt(200, '...'); ?>
+                                </div>
+                                
+                                <!-- 搜索结果元数据 -->
+                                <div class="search-result-meta">
+                                    <span class="search-result-date">
+                                        <i class="far fa-calendar"></i>
+                                        <?php $this->date('Y-m-d H:i'); ?>
+                                    </span>
+                                    <span class="search-result-author">
+                                        <i class="far fa-user"></i>
+                                        <?php $this->author(); ?>
+                                    </span>
+                                    <span class="search-result-category">
+                                        <i class="far fa-folder"></i>
                                         <?php $this->category(', '); ?>
                                     </span>
+                                    <span class="search-result-comments">
+                                        <i class="far fa-comment"></i>
+                                        <?php $this->commentsNum('0', '1', '%d'); ?>
+                                    </span>
                                 </div>
-                            </div>
-                            
-                            <div class="announcement-excerpt">
-                                <?php $this->content('阅读更多...'); ?>
-                            </div>
-                            
-                            <div class="announcement-footer">
-                                <a href="<?php $this->permalink() ?>" class="read-more">阅读更多</a>
-                                <div class="announcement-tags">
+                                
+                                <!-- 搜索结果标签 -->
+                                <div class="search-result-tags">
                                     <?php $this->tags(' ', true, '无标签'); ?>
+                                </div>
+                                
+                                <!-- 阅读更多按钮 -->
+                                <div class="announcement-buttons">
+                                    <a href="<?php $this->permalink() ?>" class="btn">阅读更多</a>
                                 </div>
                             </div>
                         </article>
                         <?php endwhile; ?>
                     <?php else: ?>
-                        <div class="no-posts">
+                        <!-- 无搜索结果状态 -->
+                        <div class="no-search-results">
+                            <i class="fas fa-search no-results-icon"></i>
                             <h3>暂无文章</h3>
                             <p>该标签下还没有发布任何文章</p>
                         </div>
                     <?php endif; ?>
                 </div>
                 
+                <!-- 分页样式 - Steam风格 -->
                 <div class="pagination">
                     <?php $this->pageNav('上一页', '下一页', 1, '...', array('wrapTag' => 'div', 'wrapClass' => 'page-nav', 'itemTag' => 'span', 'textTag' => 'a', 'currentClass' => 'current')); ?>
                 </div>

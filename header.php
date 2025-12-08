@@ -137,6 +137,12 @@
             color: var(--highlight-color);
             text-decoration: none;
             transition: all var(--transition-fast);
+            /* 解决长链接超出UI问题 */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            display: inline-block;
         }
 
         a:hover {
@@ -403,6 +409,15 @@
             flex-direction: column;
             gap: var(--spacing-lg);
             margin-bottom: var(--spacing-xl);
+        }
+        
+        /* 公告区域链接样式 */
+        .announcement-list a {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            display: inline-block;
         }
 
         /* 日期分组标题 */
@@ -749,6 +764,11 @@
 
         .post-content a {
             color: var(--highlight-color);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            display: inline-block;
         }
 
         .post-content img {
@@ -852,6 +872,15 @@
             gap: var(--spacing-lg);
         }
         
+        /* 相关文章链接样式 */
+        .related-posts a {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            display: inline-block;
+        }
+        
         .related-card {
             display: flex;
             flex-direction: column;
@@ -927,6 +956,15 @@
             font-size: var(--font-size-xlarge);
             margin-bottom: var(--spacing-lg);
             color: var(--text-primary);
+        }
+        
+        /* 评论区链接样式 */
+        .comments-section a {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            display: inline-block;
         }
 
         /* 分类页样式 - Steam风格 */
@@ -1092,6 +1130,10 @@
             font-size: var(--font-size-small);
             transition: all var(--transition-fast);
             text-decoration: none;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
         }
         
         .category-post-tags a:hover {
@@ -1291,6 +1333,10 @@
             font-size: var(--font-size-small);
             transition: all var(--transition-fast);
             text-decoration: none;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
         }
         
         .search-result-tags a:hover {
@@ -1363,6 +1409,61 @@
             content: "•";
             color: var(--highlight-color);
             font-weight: bold;
+        }
+        
+        /* 404页面样式 - Steam风格 */
+        .error-404 {
+            text-align: center;
+            padding: var(--spacing-xxl) var(--spacing-lg);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: var(--highlight-color);
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.8;
+        }
+        
+        .error-title {
+            font-size: var(--font-size-xxlarge);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .error-description {
+            font-size: var(--font-size-large);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        .error-search {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .error-search h3 {
+            font-size: var(--font-size-large);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .error-search .search-input {
+            width: 100%;
         }
 
         /* 响应式设计 */
@@ -1459,6 +1560,21 @@
             
             .refine-select {
                 width: 100%;
+            }
+            
+            /* 搜索结果卡片平板适配 */
+            .search-result-card {
+                padding: var(--spacing-md);
+            }
+            
+            .search-result-meta {
+                flex-wrap: wrap;
+            }
+            
+            /* 相关文章平板适配 */
+            .related-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: var(--spacing-md);
             }
             
             /* 新闻卡片改为垂直布局 */
@@ -1566,6 +1682,71 @@
             .announcement-actions {
                 margin-left: 0;
                 margin-top: var(--spacing-xs);
+            }
+            
+            /* 搜索结果卡片移动端适配 */
+            .search-result-card {
+                padding: var(--spacing-md);
+            }
+            
+            .search-result-title {
+                font-size: var(--font-size-large);
+            }
+            
+            .search-result-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-xs);
+            }
+            
+            .search-result-meta span {
+                margin-bottom: var(--spacing-xs);
+            }
+            
+            /* 相关文章移动端适配 */
+            .related-list {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .related-card-thumbnail {
+                height: 160px;
+            }
+            
+            /* 标签页移动端适配 */
+            .search-header {
+                padding-bottom: var(--spacing-md);
+            }
+            
+            .search-title {
+                font-size: var(--font-size-large);
+            }
+            
+            /* 404页面移动端适配 */
+            .error-404 {
+                padding: var(--spacing-xl) var(--spacing-md);
+            }
+            
+            .error-code {
+                font-size: 5rem;
+            }
+            
+            .error-title {
+                font-size: var(--font-size-xlarge);
+            }
+            
+            .error-description {
+                font-size: var(--font-size-normal);
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .error-actions .btn {
+                width: 100%;
+                max-width: 200px;
             }
         }
     </style>
