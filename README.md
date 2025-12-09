@@ -1,6 +1,6 @@
 ## steam-announcement-Template For Typecho
 
-## 此模板适合Typecho，有任何BUG请发issues,也欢迎大佬给我的模板pull新功能（
+## 此模板用于Typecho | 欢迎大佬给我pull新功能:D | 也欢迎提issues~
 
 >自定义字段：thumbnail 添加文章封面 | 自定义字段：customExcerpt 添加自定义摘要
 
